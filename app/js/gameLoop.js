@@ -2,6 +2,6 @@ function gameloop(){
   // readInput
   // updateWorld
   // draw
-  requestAnimationFrame(gameloop);
+  ra(gameloop);
 }
-requestAnimationFrame(gameloop);
+ra(gameloop);

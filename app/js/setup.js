@@ -20,3 +20,4 @@ if (!requestAnimationFrame) {
     return id;
   };
 }
+ra = requestAnimationFrame;
