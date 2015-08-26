@@ -1,0 +1,35 @@
+{
+  "name": "revertrex",
+  "version": "0.0.1",
+  "description": "js13k simple game about reverting the pass of the ages.",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-filesize": "0.0.6",
+    "gulp-uglify": "^1.3.0",
+    "gulp-webserver": "^0.9.1",
+    "gulp-zip": "^3.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agar3s/revertrex.git"
+  },
+  "keywords": [
+    "js13k",
+    "game"
+  ],
+  "author": "@agar3s",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agar3s/revertrex/issues"
+  },
+  "homepage": "https://github.com/agar3s/revertrex"
+}
