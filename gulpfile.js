@@ -28,6 +28,8 @@ gulp.task('concat-scripts', ['copy'], function() {
      './app/js/setup.js',
      './app/js/events/keys.js',   // optional-remove it for click/touch games
      './app/js/events/click.js', // optional-remove it for key games
+     './app/js/generatedSprites.js',
+     './app/js/sprite.js',
      './app/js/gameLoop.js',
      './app/js/outro.js'
   ])
@@ -59,4 +61,3 @@ gulp.task('report', ['compress'], function(){
   gulp.src(['./app.zip'])
   .pipe(filesize())
 });
-
