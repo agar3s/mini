@@ -30,6 +30,7 @@ gulp.task('concat-scripts', ['copy'], function() {
      './app/js/events/click.js', // optional-remove it for key games
      './app/js/generatedSprites.js',
      './app/js/sprite.js',
+     './app/js/layeredSprite.js',
      './app/js/gameLoop.js',
      './app/js/outro.js'
   ])
