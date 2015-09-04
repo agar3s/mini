@@ -5,6 +5,7 @@ var dir = './app/sprites';
 var cols = 16;
 var rows = 16;
 
+var LAYERS = 'MNOPQRSTUVWXYZAB';
 
 function main(cb){
   fs.readdir(dir, function(err, files){
@@ -12,7 +13,7 @@ function main(cb){
     if (err) throw err;
     files.forEach(function(filename){
       var file = fs.readFileSync(dir+'/'+filename, 'utf-8');
-      sprites.push(processSprite(filename, file));
+      sprites = sprites.concat(processFile(filename, file));
     });
 
     var result = joinSprites(sprites);
@@ -20,23 +21,54 @@ function main(cb){
   });
 };
 
-function processSprite(name, rawSprite){
+function copyArray(array){
+  var newArray = [];
+  for (var i = 0; i < array.length; i++) {
+    newArray.push(array[i]);
+  };
+  return newArray;
+}
+
+function isEmptyLayer(sprite){
+  var sum = 0;
+  for (var i = 0; i < sprite.frames.length; i++) {
+    sum+=sprite.frames[i].length;
+  };
+  return !sprite.key && !sum;
+}
+
+function processFile(name, rawSprite){
   var indexOfAnimation = rawSprite.indexOf('\nAnimation:\n');
+  var indexOfColors = rawSprite.indexOf('\nColors:\n');
   var frames = rawSprite.substring(0, indexOfAnimation).split('//new Frame');
-  var animations = rawSprite.substring(indexOfAnimation+12).split(',');
+  var animations = rawSprite.substring(indexOfAnimation+12, indexOfColors).split(',');
+  
+  var spriteLayers = [];
+  
+  for (var i = 0; i < LAYERS.length; i++) {
+    var spriteLayer = processSprite(name, copyArray(frames), animations, LAYERS[i]);
+    if(!isEmptyLayer(spriteLayer)){
+      spriteLayers.push(spriteLayer);
+    }
+  };
+  return spriteLayers;
+};
+
+function processSprite(name, frames, animations, layer){
   for (var i = 0; i < frames.length; i++) {
-    frames[i] = encodeFrame(frames[i]);
+    frames[i] = encodeFrame(frames[i], layer);
   };
   
   var animres = buildDiffArray(frames, animations);
   return {
-    name: name.replace('.sprite', ''),
+    name: name.replace('.sprite', '')+layer,
     key: frames[0], 
-    frames: animres
+    frames: animres,
+    layer: layer
   };
-};
+}
 
-function encodeFrame(frame){
+function encodeFrame(frame, layer){
   var byteArray = [];
   var encoded = '';
   var data = frame.replace(/\n/g, '');
@@ -44,7 +76,7 @@ function encodeFrame(frame){
 
   for (var i = 0; i < data.length; i++) {
     var character = data[i];
-    if(character==='M'){
+    if(character===layer){
       byteArray.push(i);
     }
     if(character==='/'){

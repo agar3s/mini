@@ -1,7 +1,13 @@
 
 var LayeredSprite = function(sprites){
   var m = this;
-  m.sprites = sprites;
+  m.sprites = [];
+  for (var i = 0; i < sprites.length; i++) {
+    var sprite = new Sprite(sprites[i].key);
+    sprite.color = sprites[i].color;
+    sprite.layer = sprites[i].layer;
+    m.sprites.push(sprite);
+  };
   m.pixelSize = 0;
   m.setPixelSize = function(pixelSize){
     m.pixelSize = pixelSize;
@@ -17,6 +23,6 @@ var LayeredSprite = function(sprites){
     m.sprites.map(function(sprite){sprite.x=x; sprite.y=y;});
   }
   m.setAnimation = function(name){
-    m.sprites.map(function(sprite){sprite.setAnimation(name)});
+    m.sprites.map(function(sprite){sprite.setAnimation(name+sprite.layer)});
   }
 }

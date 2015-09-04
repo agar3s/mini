@@ -10,6 +10,8 @@ var gulp      = require('gulp'),
     zip       = require('gulp-zip'),
     filesize  = require('gulp-filesize');
 
+var Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var replaceWords = [];
 
 gulp.task('clean', function(){
   return gulp.src(['dist/*'], {read:false})
@@ -34,9 +36,9 @@ gulp.task('concat-scripts', ['copy'], function() {
      './app/js/gameLoop.js',
      './app/js/outro.js'
   ])
-    .pipe(concat('a.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/'))
+  .pipe(concat('a.js'))
+  .pipe(uglify())
+  .pipe(gulp.dest('./dist/'))
 });
 
 
@@ -44,10 +46,10 @@ gulp.task('default', ['concat-scripts'], function() {
   gulp.watch('app/js/*.js', ['concat-scripts']);
 
   gulp.src('./dist')
-    .pipe(webserver({
-      host:'0.0.0.0',
-      livereload: true
-    }));
+  .pipe(webserver({
+    host:'0.0.0.0',
+    livereload: true
+  }));
 
 });
 
